@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Digital Sathi Network — Academy, LMS, MCQs, Entry Test Prep & Learning Ecosystem" />
+  <title>Digital Sathi Network — Learn · Test · Grow</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <div class="loader-morph">
+      <div class="loader-cube-scene">
+        <div class="loader-cube">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <p class="loader-label">Digital Sathi</p>
+    </div>
+  </div>
+
+  <div class="scroll-progress" id="scroll-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+  <div class="wave-layer" aria-hidden="true">
+    <svg class="wave-svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path class="wave-path" fill="currentColor" d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,138.7C672,128,768,160,864,181.3C960,203,1056,213,1152,197.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+  </div>
+
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <div id="offline-banner" class="offline-banner" role="alert" hidden>
+    <span class="offline-icon">⚠</span>
+    <p>Internet issue — please connect or contact support</p>
+    <button type="button" class="offline-dismiss" id="offline-dismiss" aria-label="Dismiss">×</button>
+  </div>
+
+  <aside class="social-float" aria-label="Social links">
+    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-fab" data-tip="Facebook">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-fab" data-tip="Instagram">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://wa.me/923001234567" target="_blank" rel="noopener noreferrer" class="social-fab" data-tip="WhatsApp Chat">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.881 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="https://chat.whatsapp.com/invite-placeholder" target="_blank" rel="noopener noreferrer" class="social-fab" data-tip="WhatsApp Group">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16.75 13.96c.25 1.43.43 2.83.52 4.24 1.51.15 3.04-.24 4.14-1.11-1.33-2.1-2.24-4.32-2.73-6.59-.85.41-1.89.47-2.93.46zM13.77 17.2c-.16-1.31-.38-2.62-.65-3.9-1.42.26-2.87.26-4.28 0-.27 1.28-.49 2.59-.65 3.9 1.53.33 3.11.33 4.58 0zM4.45 15.86c.59 1.74 1.52 3.34 2.73 4.73 1.33-2.09 2.24-4.31 2.73-6.59-.85-.41-1.89-.47-2.93-.46-.09 1.41-.27 2.81-.53 4.32zM12 4.26c.85.41 1.89.47 2.93.46.09-1.41.27-2.81.53-4.32-1.51-.15-3.04.24-4.14 1.11 1.33 2.1 2.24 4.32 2.73 6.59zM4.45 8.14c-.59-1.74-1.52-3.34-2.73-4.73-1.33 2.09-2.24 4.31-2.73 6.59.85.41 1.89.47 2.93.46.09-1.41.27-2.81.53-4.32z"/></svg>
+    </a>
+  </aside>
+
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="#home" class="brand magnetic-btn" data-nav="home">
+        <span class="brand-cube-mini" aria-hidden="true"></span>
+        <span class="brand-text">Digital Sathi <small>Network</small></span>
+      </a>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#home" data-nav="home">Home</a></li>
+          <li><a href="#about" data-nav="about">About</a></li>
+          <li><a href="#courses" data-nav="courses">Courses</a></li>
+          <li><a href="#entry-test" data-nav="entry-test">Entry Test</a></li>
+          <li><a href="#mcqs" data-nav="mcqs">MCQs</a></li>
+          <li><a href="#results" data-nav="results">Results</a></li>
+          <li><a href="#services" data-nav="services">Services</a></li>
+          <li><a href="#portfolio" data-nav="portfolio">Portfolio</a></li>
+          <li><a href="#achievements" data-nav="achievements">Achievements</a></li>
+          <li><a href="#contact" data-nav="contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <button type="button" class="theme-toggle magnetic-btn" id="theme-toggle" aria-label="Toggle dark mode">
+        <span class="theme-icon sun">☀</span>
+        <span class="theme-icon moon">☾</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="app-main" class="app-main">
+    <section id="home" class="section section-hero" data-section="home">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow reveal-item">Digital Academy · LMS · Earning Ecosystem</p>
+          <h1 class="hero-title">
+            <span class="glitch glitch-layer" data-text="Digital Sathi">Digital Sathi</span>
+            <span class="gradient-text reveal-item">Network</span>
+          </h1>
+          <p class="hero-scramble" id="hero-scramble">Preparing tomorrow’s achievers with structured learning, smart testing, and real outcomes.</p>
+
+          <div class="hero-actions">
+            <a href="#courses" class="btn btn-primary magnetic-btn ripple" data-nav="courses">Explore Courses</a>
+            <a href="#entry-test" class="btn btn-ghost magnetic-btn ripple" data-nav="entry-test">Start Mock Test</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card glass reveal-item">
+              <strong id="stat-learners">12k+</strong>
+              <span>Active learners</span>
+            </div>
+            <div class="stat-card glass reveal-item">
+              <strong>98%</strong>
+              <span>Satisfaction</span>
+            </div>
+            <div class="stat-card glass reveal-item">
+              <strong>24/7</strong>
+              <span>Support desk</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="cube-showcase" aria-hidden="true">
+            <div class="infinite-cube">
+              <div class="cube-face front"></div>
+              <div class="cube-face back"></div>
+              <div class="cube-face right"></div>
+              <div class="cube-face left"></div>
+              <div class="cube-face top"></div>
+              <div class="cube-face bottom"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section" data-section="about">
+      <div class="section-head reveal-item">
+        <h2>About <span class="gradient-text">Digital Sathi</span></h2>
+        <p>We combine pedagogy, technology, and community to deliver a premium learning operating system for students and professionals.</p>
+      </div>
+      <div class="about-grid">
+        <article class="about-card glass parallax-slow reveal-item">
+          <h3>Academy System</h3>
+          <p>Structured pathways, cohort-based progress, and mentor checkpoints aligned to real exam patterns.</p>
+        </article>
+        <article class="about-card glass parallax-mid reveal-item">
+          <h3>LMS &amp; Analytics</h3>
+          <p>Modular course units, assessments, and export-ready data hooks for future backend integration.</p>
+        </article>
+        <article class="about-card glass parallax-fast reveal-item">
+          <h3>Earning Ecosystem</h3>
+          <p>Scholarships, referrals, and partner programs designed to reward consistent performance.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="courses" class="section" data-section="courses">
+      <div class="section-head reveal-item">
+        <h2>Course <span class="gradient-text">Catalog</span></h2>
+        <p>Tap a card to open the full course engine — outline, duration, fees, demo, and admission.</p>
+      </div>
+
+      <div class="skeleton-grid" id="courses-skeleton">
+        <div class="skeleton-card shimmer"></div>
+        <div class="skeleton-card shimmer"></div>
+        <div class="skeleton-card shimmer"></div>
+        <div class="skeleton-card shimmer"></div>
+      </div>
+
+      <div class="course-grid" id="course-grid" hidden></div>
+    </section>
+
+    <section id="course-detail" class="section section-detail" data-section="course-detail" hidden>
+      <button type="button" class="btn btn-back slide-back magnetic-btn" id="course-detail-back" data-nav="courses">
+        ← Back to Courses
+      </button>
+      <div id="course-detail-root" class="course-detail-root"></div>
+    </section>
+
+    <section id="entry-test" class="section" data-section="entry-test">
+      <div class="section-head reveal-item">
+        <h2>Entry Test <span class="gradient-text">Preparation</span></h2>
+        <p>Three engines: scheduled mocks, daily question banks, and offline drills.</p>
+      </div>
+
+      <div class="engine-tabs" role="tablist">
+        <button type="button" class="engine-tab active" role="tab" aria-selected="true" data-engine="mock">Mock Tests</button>
+        <button type="button" class="engine-tab" role="tab" aria-selected="false" data-engine="daily">Daily Question Bank</button>
+        <button type="button" class="engine-tab" role="tab" aria-selected="false" data-engine="offline">Offline MCQs</button>
+      </div>
+
+      <div id="engine-mock" class="engine-panel active">
+        <p class="engine-desc">Select a mock — each session opens in a secure form environment.</p>
+        <div class="btn-grid" id="mock-test-grid"></div>
+      </div>
+
+      <div id="engine-daily" class="engine-panel">
+        <p class="engine-desc">Browse topic libraries — curated pathways for daily practice.</p>
+        <div class="category-grid" id="daily-categories"></div>
+      </div>
+
+      <div id="engine-offline" class="engine-panel">
+        <div class="quiz-shell glass" id="offline-quiz">
+          <div class="quiz-header">
+            <span class="quiz-badge">Offline Engine</span>
+            <span id="quiz-score">Score: 0</span>
+          </div>
+          <div id="quiz-question" class="quiz-question"></div>
+          <div id="quiz-options" class="quiz-options"></div>
+          <div class="quiz-actions">
+            <button type="button" class="btn btn-primary magnetic-btn ripple" id="quiz-next">Next</button>
+            <button type="button" class="btn btn-ghost magnetic-btn ripple" id="quiz-reset">Reset Quiz</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mcqs" class="section" data-section="mcqs">
+      <div class="section-head reveal-item">
+        <h2>MCQ <span class="gradient-text">Lab</span></h2>
+        <p>Unified access to practice modes — switch between online banks and built-in challenges.</p>
+      </div>
+      <div class="mcq-hub glass reveal-item">
+        <p>Use the Entry Test section for full engines, or jump into offline practice below.</p>
+        <a href="#entry-test" class="btn btn-primary magnetic-btn ripple" data-nav="entry-test">Open Entry Test Hub</a>
+      </div>
+    </section>
+
+    <section id="results" class="section" data-section="results">
+      <div class="section-head reveal-item">
+        <h2>Results <span class="gradient-text">Center</span></h2>
+        <p>Check outcomes for each assessment track — linked ledgers update in real time.</p>
+      </div>
+      <div class="btn-grid" id="results-grid"></div>
+    </section>
+
+    <section id="services" class="section" data-section="services">
+      <div class="section-head reveal-item">
+        <h2>Services</h2>
+        <p>Implementation-ready modules for institutions and creators.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card glass reveal-item"><h3>White-label LMS</h3><p>Branded portals with SSO-ready architecture.</p></article>
+        <article class="service-card glass reveal-item"><h3>Assessment API</h3><p>Plug-in MCQ engines with webhook callbacks.</p></article>
+        <article class="service-card glass reveal-item"><h3>Live Classes</h3><p>HD streaming with attendance graphs.</p></article>
+        <article class="service-card glass reveal-item"><h3>Career Desk</h3><p>Mentorship and placement analytics.</p></article>
+      </div>
+    </section>
+
+    <section id="portfolio" class="section" data-section="portfolio">
+      <div class="section-head reveal-item">
+        <h2>Portfolio</h2>
+        <p>Selected builds and learning products shipped with our partners.</p>
+      </div>
+      <div class="portfolio-grid">
+        <figure class="portfolio-item glass reveal-item"><figcaption>STEM Accelerator</figcaption></figure>
+        <figure class="portfolio-item glass reveal-item"><figcaption>Medical Entry Matrix</figcaption></figure>
+        <figure class="portfolio-item glass reveal-item"><figcaption>CS Fundamentals OS</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="achievements" class="section" data-section="achievements">
+      <div class="section-head reveal-item">
+        <h2>Achievements</h2>
+        <p>Milestones that reflect our learners’ collective momentum.</p>
+      </div>
+      <ul class="achievement-list">
+        <li class="glass reveal-item"><strong>50+</strong> partner schools</li>
+        <li class="glass reveal-item"><strong>1M+</strong> questions attempted</li>
+        <li class="glass reveal-item"><strong>Top 100</strong> national ranks supported</li>
+      </ul>
+    </section>
+
+    <section id="contact" class="section" data-section="contact">
+      <div class="section-head reveal-item">
+        <h2>Contact</h2>
+        <p>We respond within one business day. Prefer chat? Use the assistant.</p>
+      </div>
+      <form class="contact-form glass reveal-item" id="contact-form">
+        <label>Name<input type="text" name="name" required autocomplete="name" /></label>
+        <label>Email<input type="email" name="email" required autocomplete="email" /></label>
+        <label>Message<textarea name="message" rows="4" required></textarea></label>
+        <button type="submit" class="btn btn-primary magnetic-btn ripple">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <strong>Digital Sathi Network</strong>
+        <p>© <span id="year"></span> All rights reserved.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#home" data-nav="home">Home</a>
+        <a href="#courses" data-nav="courses">Courses</a>
+        <a href="#contact" data-nav="contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="chatbot" id="chatbot">
+    <button type="button" class="chatbot-toggle magnetic-btn" id="chatbot-toggle" aria-expanded="false" aria-controls="chatbot-panel">💬</button>
+    <div class="chatbot-panel" id="chatbot-panel" hidden>
+      <div class="chatbot-head">
+        <span>Sathi Assistant</span>
+        <button type="button" class="chatbot-close" id="chatbot-close" aria-label="Close chat">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-messages">
+        <p class="chat-bubble bot">Hi! Ask about courses, tests, or admissions.</p>
+      </div>
+      <form class="chatbot-input" id="chatbot-form">
+        <input type="text" id="chatbot-input" placeholder="Type a message…" autocomplete="off" />
+        <button type="submit" class="btn btn-primary btn-sm">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-root" id="course-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel glass">
+      <button type="button" class="modal-close magnetic-btn" id="modal-close" aria-label="Close">
+        <span class="close-icon"></span>
+      </button>
+      <div id="modal-content" class="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="js/main.js"></script>
+</body>
+</html>
